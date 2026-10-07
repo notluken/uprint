@@ -1,5 +1,7 @@
 # μprint
 
+> **Español:** guía para usar μprint con una Creality Ender 3 Pro en [docs/ender-3-pro.md](docs/ender-3-pro.md).
+
 μprint macht aus einem ESP32-S3 einen kleinen Druckserver für deinen 3D-Drucker. Du lädst G-Code im Browser hoch,
 μprint speichert ihn auf einer microSD-Karte oder im internen Speicher und schickt ihn über USB an den Drucker.
 Starten, Pausieren und Abbrechen erledigst du ebenfalls im Browser, am Rechner oder am Handy. Ein PC muss dafür nicht

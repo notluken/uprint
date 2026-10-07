@@ -145,8 +145,16 @@
 <footer class="foot" data-i18n-html="footer.html"></footer>
 
 <script>
-const REPO = 'https://github.com/dmyrenne/uprint';
-const LANGS = { de: 'Deutsch', en: 'English' };
+// En GitHub Pages (<owner>.github.io/<repo>/) se deduce el repo del fork desde la URL;
+// fuera de Pages (p. ej. en local) se usa el valor de respaldo.
+const REPO = (() => {
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  if (!m) return 'https://github.com/dmyrenne/uprint';
+  const owner = m[1];
+  const repo = location.pathname.split('/').filter(Boolean)[0];
+  return repo ? `https://github.com/${owner}/${repo}` : `https://github.com/${owner}/uprint`;
+})();
+const LANGS = { de: 'Deutsch', en: 'English', es: 'Español' };
 const I18N = {
   de: {
     'lang': 'Sprache',
@@ -217,6 +225,41 @@ const I18N = {
     'setup.printer.html': 'Connect the printer via USB to the ESP32-S3’s <b>USB host port</b> (native USB, GPIO19/20, usually labelled <code>USB</code> or <code>OTG</code>). The port has to supply 5 V; some boards need a solder bridge closed for that.',
     'setup.update.html': 'Later updates need no cable: install <code>uprint-…-&lt;variant&gt;-ota.bin</code> from the <a href="{repo}/releases" target="_blank" rel="noopener">releases</a> in µprint under “Settings → Firmware”. More on hardware and wiring is in the <a href="{repo}#readme" target="_blank" rel="noopener">documentation</a>.',
     'footer.html': 'µprint by Daniel Myrenne · <a href="{repo}" target="_blank" rel="noopener">GitHub</a> · flashing with <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a>',
+  },
+  es: {
+    'lang': 'Idioma',
+    'tagline': 'flasher web',
+    'h.need': 'Lo que necesitás',
+    'need.board.html': 'Una placa <b>ESP32-S3</b> con al menos 4 MB de flash. Si no es la variante N16R8, vas a necesitar una tarjeta microSD.',
+    'h.variant': '¿Qué placa tenés?',
+    'v.n16r8': '16 MB de flash, 8 MB de PSRAM. Archivos en microSD y además unos 12 MB de almacenamiento interno.',
+    'v.basic': 'Cualquier otra ESP32-S3 con al menos 4 MB de flash. Archivos solo en microSD.',
+    'v.hint': 'La variante suele estar impresa en la tapa metálica del módulo, por ejemplo «ESP32-S3-WROOM-1 N16R8». Si tenés dudas, elegí Basic: funciona en cualquier ESP32-S3.',
+    'chooseFirst': 'Elegí primero tu placa arriba.',
+    'need.browser.html': 'Un navegador con WebSerial: <b>Chrome, Edge u Opera</b> en una computadora. Firefox, Safari y los celulares no lo soportan.',
+    'need.cable': 'Un cable USB de datos (los cables solo de carga no funcionan).',
+    'h.install': 'Instalar el firmware',
+    'step.port.html': 'Conectá la placa a la computadora por USB. Si tiene dos puertos USB, usá el de programación, normalmente marcado como <code>UART</code> o <code>COM</code>.',
+    'step.click': 'Hacé clic en «Instalar» y elegí el puerto serie de la placa en el diálogo del navegador.',
+    'step.erase': 'En la primera instalación, confirmá el borrado del dispositivo (en inglés, «Erase device»). Después, grabar tarda cerca de un minuto.',
+    'install': 'Instalar',
+    'version': 'Versión {v}',
+    'ch.channel': 'Tipo de versión',
+    'ch.release': 'Release',
+    'ch.version': 'Versión',
+    'ch.latest': 'última',
+    'ch.none': 'No hay ninguna versión alpha disponible',
+    'ch.alpha.note': 'Las versiones alpha son adelantos para probar funciones nuevas y pueden tener errores. Para uso normal, elegí la versión estable.',
+    'unsupported': 'Este navegador no soporta WebSerial. Usá Chrome, Edge u Opera en una computadora.',
+    'notAllowed': 'WebSerial solo funciona por HTTPS.',
+    'boot.html': 'Si el navegador no encuentra la placa o se corta la conexión: mantené <code>BOOT</code> presionado, apretá brevemente <code>RESET</code> (o <code>RST</code>/<code>EN</code>), soltá <code>BOOT</code> y hacé clic en «Instalar» de nuevo. Apretá <code>RESET</code> una vez después de flashear.',
+    'h.setup': 'Configurar',
+    'setup.ap.html': 'Al arrancar, µprint abre el access point Wi-Fi <b>uprint</b>, contraseña <code>uprint123</code>.',
+    'setup.open.html': 'Conectate a esa red y abrí <a href="http://192.168.4.1" target="_blank" rel="noopener">http://192.168.4.1</a>.',
+    'setup.wifi': 'En «Wi-Fi», elegí tu red y conectate. Después, µprint va a estar disponible en tu red en http://uprint.local.',
+    'setup.printer.html': 'Conectá la impresora por USB al <b>puerto USB host</b> de la ESP32-S3 (USB nativo, GPIO19/20, normalmente marcado como <code>USB</code> u <code>OTG</code>). El puerto tiene que entregar 5 V; en algunas placas hay que cerrar un puente de soldadura para eso.',
+    'setup.update.html': 'Las actualizaciones posteriores no necesitan cable: instalá el archivo <code>uprint-…-&lt;variante&gt;-ota.bin</code> de los <a href="{repo}/releases" target="_blank" rel="noopener">releases</a> en µprint, en «Ajustes → Firmware». Más datos sobre hardware y cableado están en la <a href="{repo}#readme" target="_blank" rel="noopener">guía</a>.',
+    'footer.html': 'µprint by Daniel Myrenne · <a href="{repo}" target="_blank" rel="noopener">GitHub</a> · flasheo con <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a>',
   },
 };
 function pickLang() {
